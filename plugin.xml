@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="starBuilder"
+         name="STAR Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="edu.mit.star.builderplugin.builder.STARBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="StarNature"
+         name="MIT STAR Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="edu.mit.star.builderplugin.builder.StarNature">
+         </run>
+      </runtime>
+      <builder
+            id="edu.mit.star.builderplugin.starBuilder">
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IProject"
+            nameFilter="*"
+            id="edu.mit.star.builderplugin.contribution1">
+         <action
+               label="Add/Remove STAR Nature"
+               class="edu.mit.star.builderplugin.builder.ToggleNatureAction"
+               menubarPath="additions"
+               enablesFor="+"
+               id="edu.mit.star.builderplugin.addRemoveNatureAction">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         id="edu.mit.star.builderplugin.codegen.Raiser"
+         name="Signal Component Markers"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         id="edu.mit.star.builderplugin.codegen.SignalComponent"
+         name="Signal Component Markers"
+         point="org.eclipse.core.resources.markers">
+      <persistent
+            value="true">
+      </persistent>
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="edu.mit.star.builderplugin.codegen.RaiserMarkerResolution"
+            markerType="edu.mit.star.builderplugin.codegen.Raiser">
+      </markerResolutionGenerator>
+      <markerResolutionGenerator
+            class="edu.mit.star.builderplugin.codegen.SignalComponentMarkerResolution"
+            markerType="edu.mit.star.builderplugin.codegen.SignalComponent">
+      </markerResolutionGenerator>
+   </extension>
+
+</plugin>
